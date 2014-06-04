@@ -29,6 +29,10 @@ import sys
 from glob import glob
 from multiprocessing import Queue, Process
 
+from visvalingam import VisvalingamSimplification
+
+THRESHOLD = 0.00000003
+
 def remove_accents(data):
     return ''.join(x for x in unicodedata.normalize('NFKD', data.decode('utf8')) if x in string.ascii_letters+"- '").upper()
 
@@ -55,7 +59,10 @@ def worker(input):
             s = shapes.next()
 
             name = remove_accents(r[0])
-            coords = [map(lambda point: map(lambda _: str(_), point), s.points)]
+
+            coords = VisvalingamSimplification(s.points)
+            coords = coords.simplifyLineString(THRESHOLD)
+            coords = [map(lambda point: map(lambda _: str(_), point), coords)]
 
             outjson.append({
                 'type':"Feature",
