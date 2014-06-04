@@ -40,7 +40,11 @@ def colorize(dette):
         '#b10026'
     ]
 
-    if dette <= 50:
+    cheater = '#000000'
+
+    if dette==0 or dette==1:
+        return cheater
+    elif dette <= 50:
         return colors[0]
     elif dette > 50 and dette <= 100:
         return colors[1]
