@@ -32,6 +32,7 @@ from multiprocessing import Queue, Process
 from visvalingam import VisvalingamSimplification
 
 THRESHOLD = 0.00000003
+SOURCE_FOLDER = 'shp/'
 
 def remove_accents(data):
     return ''.join(x for x in unicodedata.normalize('NFKD', data.decode('utf8')) if x in string.ascii_letters+"- '").upper()
@@ -47,7 +48,7 @@ def worker(input):
         print('Processing : {}'.format(file))
 
         # ouvrir le shp
-        sarthe_shp = sf.Reader(file)
+        sarthe_shp = sf.Reader(SOURCE_FOLDER+file)
 
         # création de la liste du json final et du dict
         shapes = sarthe_shp.iterShapes()
@@ -97,7 +98,9 @@ def main():
     input = Queue()
 
     # chargement des tasks
-    for f in glob("*.shp"):
+    for f in glob("{}*.shp".format(SOURCE_FOLDER)):
+        if SOURCE_FOLDER!='':
+            f = f.replace('{}'.format(SOURCE_FOLDER), '')
         input.put(f)
 
     workers_list = []
