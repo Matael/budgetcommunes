@@ -117,7 +117,7 @@ def worker(input):
                         }
                     }
                 except:
-                    print('Problem with {}'.format(s))
+                    print(u'Problem with {}'.format(s))
 
             geolist['features'].append(new_feature)
 
