@@ -1,0 +1,4 @@
+beautifulsoup4==4.2.1
+pyshp==1.2.1
+visvalingam==0.3.0
+requests==1.2.3
